@@ -1,23 +1,30 @@
 def pig_latin(sentence):
-    # Write your solution here!
-  #look at the first element, if its a,e,i,o,u return the sentence itself 
-    #if not grab the first element and move it at the end 
-    # also concatenate with "ay"
-    vowels = ['a','e','i','o','u']
-    words = sentence.split()       #words = "a", "w", "e", "s", "o", "m, "e"
-    new_list = []
+   # split the sentence into a list of words
+    words = sentence.split()
 
-    for letters in words:
-      if letters[0] in vowels:
-        new_list.append(letters)
-        # print(new_list)
-      else:
-          new_sentence = letters[1:] + letters[0] + "ay"
-          new_list.append(new_sentence)
-          # new_list = letters[1:] + letters[0] + "ay"
-    
-    return " ".join(new_list)
-     
+    # for each new word, use the helper to convert the word
+    # into pig latin. Put those words into new_words
+    new_words = []
+    for word in words:
+        new_words.append(pig_latin_single_word(word))
+
+    # Join all the words together with spaces to make the final string
+    return " ".join(new_words)
+
+    # Helper that converts a single word to pig latin
+def pig_latin_single_word(word):
+    # if the first letter is a vowel, don't change anything
+    if word[0] in 'aeiou':
+        return word
+
+    # otherwise, if it's a consonant
+    # start with all but the first letter of the word
+    new_word = word[1:]
+    # add the first letter to the end of the word
+    new_word += word[0]
+    # add the suffix
+    new_word += "ay"
+    return new_word
 # Test cases
 assert pig_latin("something") == "omethingsay"
 assert pig_latin("awesome") == "awesome"
